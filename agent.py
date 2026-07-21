@@ -1,4 +1,4 @@
-import argparse
+import json
 import json
 import os
 from openai import OpenAI
@@ -80,21 +80,8 @@ def run_agent(topic: str):
             # No tool calls means the agent is done and has our final report
             final_report = response_message.content
             print("\n[Agent Finished Research]")
-            
-            # Save the report
-            filename = f"{topic.replace(' ', '_').lower()[:20]}_report.md"
-            with open(filename, "w") as f:
-                f.write(final_report)
-                
-            print(f"\nSuccess! Report saved to {filename}")
-            break
+            return final_report
             
     if step_count >= max_steps:
         print("\nAgent reached maximum steps without finishing the report.")
-
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Automated Research Agent")
-    parser.add_argument("topic", type=str, help="The topic you want to research")
-    
-    args = parser.parse_args()
-    run_agent(args.topic)
+        return "Error: Agent reached maximum steps."
