@@ -1,5 +1,11 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from .env file
+load_dotenv()
+
 from agent import run_agent
 
 app = FastAPI(
